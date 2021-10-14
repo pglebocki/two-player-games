@@ -17,9 +17,35 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import org.home.twoplayergames.engine.minmax.MinMax
+import org.home.twoplayergames.engine.minmax.PositionEvaluator
 import org.home.twoplayergames.ox.OXGame
+import org.home.twoplayergames.ox.OXGameState
+import org.home.twoplayergames.ox.OXPosition
 
-private val game = OXGame()
+
+private val gameCallback: (OXGameState) -> Unit = {
+    println("Game status: $it")
+}
+
+private val oxPositionEvaluator: PositionEvaluator<OXPosition> = object : PositionEvaluator<OXPosition> {
+
+    override fun evaluate(position: OXPosition): Float {
+        return when {
+            position.isWin(1) -> 1.0f
+            position.isWin(-1) -> -1.0f
+            else -> 0.0f
+        }
+    }
+}
+
+private val game = OXGame(gameCallback).apply {
+    val tree = buildVariantsTree()
+    val minMax = MinMax(tree, oxPositionEvaluator)
+    minMax.start()
+}
+
+// TODO implement opponent !
 
 @ExperimentalFoundationApi
 fun main() = application {
