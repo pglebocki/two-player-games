@@ -23,9 +23,12 @@ class OXGame(
     var currentNode: Node<OXPosition>
 
     private val evaluator = OXPositionEvaluator()
+    private val variantBuilder = VariantTreeBuilder(evaluator)
 
     init {
-        currentNode = VariantTreeBuilder().build(currentPosition)
+        currentNode = variantBuilder.build(currentPosition)
+        variantBuilder.printNodesInfo()
+
         val mm = MinMax(evaluator)
         mm.minmax(currentNode, true)
     }
