@@ -1,8 +1,8 @@
 package org.home.twoplayergames.ox
 
-import org.home.twoplayergames.ox.SIGN.E
-import org.home.twoplayergames.ox.SIGN.O
-import org.home.twoplayergames.ox.SIGN.X
+import org.home.twoplayergames.ox.Sign.E
+import org.home.twoplayergames.ox.Sign.O
+import org.home.twoplayergames.ox.Sign.X
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -102,7 +102,7 @@ class OXPositionTest {
         Assertions.assertEquals(6, pos2.getAllChildren().size)
     }
 
-    private fun createPosition(vararg signs: SIGN): OXPosition {
+    private fun createPosition(vararg signs: Sign): OXPosition {
         return OXPosition(arrayOf(*signs), X)
     }
 }

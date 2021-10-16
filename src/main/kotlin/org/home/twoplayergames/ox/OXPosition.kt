@@ -1,23 +1,23 @@
 package org.home.twoplayergames.ox
 
-import org.home.twoplayergames.ox.SIGN.E
-import org.home.twoplayergames.ox.SIGN.O
-import org.home.twoplayergames.ox.SIGN.X
+import org.home.twoplayergames.ox.Sign.E
+import org.home.twoplayergames.ox.Sign.O
+import org.home.twoplayergames.ox.Sign.X
 
 
-enum class SIGN {
+enum class Sign {
     X, O, E
 }
 
 class OXPosition() {
 
-    constructor(array: Array<SIGN>, nextTurn: SIGN) : this() {
+    constructor(array: Array<Sign>, nextTurn: Sign) : this() {
         this.array = array
         this.nextTurn = nextTurn
     }
 
 
-    private var nextTurn: SIGN = X
+    private var nextTurn: Sign = X
     private var array = Array(9) { E }
 
     fun nextMove(row: Int, column: Int) {
@@ -31,7 +31,12 @@ class OXPosition() {
         nextTurn = nextTurn.opposite()
     }
 
-    fun isWin(sign: SIGN): Boolean {
+    fun getCell(row: Int, column: Int): Sign {
+        val index = row * 3 + column
+        return array[index]
+    }
+
+    fun isWin(sign: Sign): Boolean {
         return (array[0] == sign && array[1] == sign && array[2] == sign) ||   // rows
                 (array[3] == sign && array[4] == sign && array[5] == sign) ||
                 (array[6] == sign && array[7] == sign && array[8] == sign) ||
@@ -78,7 +83,7 @@ class OXPosition() {
         return array.find { it == E } == null
     }
 
-    fun SIGN.opposite(): SIGN {
+    fun Sign.opposite(): Sign {
         return when (this) {
             X -> O
             O -> X

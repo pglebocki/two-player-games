@@ -2,7 +2,7 @@ package org.home.twoplayergames.ox
 
 import org.home.twoplayergames.engine.minmax.MinMax
 import org.home.twoplayergames.engine.minmax.VariantTreeBuilder
-import org.home.twoplayergames.ox.SIGN.X
+import org.home.twoplayergames.ox.Sign.X
 import org.junit.jupiter.api.Test
 
 class OXMinMaxTest {
@@ -17,7 +17,7 @@ class OXMinMaxTest {
         tree
     }
 
-    private fun createPosition(vararg signs: SIGN): OXPosition {
+    private fun createPosition(vararg signs: Sign): OXPosition {
         return OXPosition(arrayOf(*signs), X)
     }
 }

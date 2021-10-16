@@ -21,9 +21,8 @@ import androidx.compose.ui.window.rememberWindowState
 import org.home.twoplayergames.ox.OXGame
 import org.home.twoplayergames.ox.OXGameState
 import org.home.twoplayergames.ox.OXPosition
+import org.home.twoplayergames.ox.Sign
 
-
-// TODO implement opponent !
 
 @ExperimentalFoundationApi
 fun main() = application {
@@ -35,7 +34,6 @@ fun main() = application {
     }
 
     val updatePositionCallback: (OXPosition) -> Unit = {
-//        it.print()
         position.value = it
     }
 
@@ -76,20 +74,19 @@ fun main() = application {
 
 @Composable
 private fun button(game: OXGame, position: MutableState<OXPosition>, row: Int, column: Int) {
-    val text = remember { mutableStateOf("") }
     val enabled = remember { mutableStateOf(true) }
 
     Spacer(Modifier.size(30.dp))
     Button(
         onClick = {
-//            game.playerMove(row, column)
+            game.playerMove(row, column)
         },
         modifier = Modifier.width(50.dp).height(50.dp),
         enabled = enabled.value
     ) {
-//        val sign = position.value.array[row][column]
-//        val char = if (sign == 1) "O" else if (sign == -1) "X" else ""
-//        enabled.value = sign != 0
-//        Text(char)
+        val sign = position.value.getCell(row, column)
+        val char = if (sign != Sign.E) sign.toString() else ""
+        enabled.value = sign != Sign.E
+        Text(char)
     }
 }
