@@ -9,4 +9,7 @@ interface PositionEvaluator<T> {
     fun isWinnerA(position: T): Boolean
 
     fun isWinnerB(position: T): Boolean
+
+    // TODO move it somewhere else
+    fun getAllChildren(position: T): List<T>
 }

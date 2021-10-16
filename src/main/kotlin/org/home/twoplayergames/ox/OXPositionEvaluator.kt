@@ -1,7 +1,6 @@
 package org.home.twoplayergames.ox
 
 import org.home.twoplayergames.engine.minmax.PositionEvaluator
-import java.lang.IllegalStateException
 
 class OXPositionEvaluator : PositionEvaluator<OXPosition> {
 
@@ -26,5 +25,9 @@ class OXPositionEvaluator : PositionEvaluator<OXPosition> {
 
     override fun isWinnerB(position: OXPosition): Boolean {
         return position.isWin(Sign.O)
+    }
+
+    override fun getAllChildren(position: OXPosition): List<OXPosition> {
+        return position.getAllChildren()
     }
 }

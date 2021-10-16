@@ -1,15 +1,13 @@
 package org.home.twoplayergames.engine.minmax
 
-import org.home.twoplayergames.ox.OXPosition
-
-class VariantTreeBuilder(
-    private val evaluator: PositionEvaluator<OXPosition>
+class VariantTreeBuilder<T>(
+    private val evaluator: PositionEvaluator<T>
 ) {
 
     private var allNodesCount = 0
     private var leafNodesCount = 0
 
-    fun build(rootPosition: OXPosition): Node<OXPosition> {
+    fun build(rootPosition: T): Node<T> {
         val rootNode = Node(position = rootPosition)
         allNodesCount++
 
@@ -17,8 +15,8 @@ class VariantTreeBuilder(
             leafNodesCount++
             return rootNode
         }
-
-        rootPosition.getAllChildren().map {
+        val children = evaluator.getAllChildren(rootPosition)
+        children.map {
             val node = build(it)
             rootNode.children.add(node)
         }
