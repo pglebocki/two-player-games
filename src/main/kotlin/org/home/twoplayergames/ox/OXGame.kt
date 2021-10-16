@@ -49,10 +49,11 @@ class OXGame(
     }
 
     private fun machineMove() {
-        var bestMove: Node<OXPosition>? = null
+        var bestMove: Node<OXPosition>? = currentNode.children.firstOrNull()
         currentNode.children.forEach {
-            if (bestMove == null) {
+            if (evaluator.isWinnerB(it.position!!)) {
                 bestMove = it
+                return@forEach
             }
             if (it.evaluation!! < bestMove!!.evaluation!!) {
                 bestMove = it

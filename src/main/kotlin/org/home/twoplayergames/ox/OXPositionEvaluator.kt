@@ -19,4 +19,12 @@ class OXPositionEvaluator : PositionEvaluator<OXPosition> {
     override fun isGameEnd(position: OXPosition): Boolean {
         return position.isWin(Sign.X) || position.isWin(Sign.O) || position.isDraw()
     }
+
+    override fun isWinnerA(position: OXPosition): Boolean {
+        return position.isWin(Sign.X)
+    }
+
+    override fun isWinnerB(position: OXPosition): Boolean {
+        return position.isWin(Sign.O)
+    }
 }
