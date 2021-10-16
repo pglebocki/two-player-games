@@ -19,6 +19,7 @@ class MinMax<T>(
         return if (maximizing) {
             var maxEval = Int.MIN_VALUE
             node.children.forEach {
+                // TODO check isWin position
                 val eval = minmax(it, false)
                 maxEval = max(maxEval, eval)
             }
@@ -27,6 +28,7 @@ class MinMax<T>(
         } else {
             var minEval = Int.MAX_VALUE
             node.children.forEach {
+                // TODO check isWin position
                 val eval = minmax(it, true)
                 minEval = min(minEval, eval)
             }
