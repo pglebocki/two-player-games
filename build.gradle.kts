@@ -13,13 +13,18 @@ repositories {
     google()
 }
 
+
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
     implementation("com.google.dagger:dagger:2.30.1")
+    implementation("junit:junit:4.12")
     kapt("com.google.dagger:dagger-compiler:2.30.1")
 
     implementation(compose.desktop.currentOs)
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
 }
 
 compose.desktop {

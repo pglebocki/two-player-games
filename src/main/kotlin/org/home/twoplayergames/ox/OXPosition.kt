@@ -1,91 +1,91 @@
 package org.home.twoplayergames.ox
 
+import org.home.twoplayergames.ox.SIGN.E
+import org.home.twoplayergames.ox.SIGN.O
+import org.home.twoplayergames.ox.SIGN.X
 
-// TODO optimize methods
-class OXPosition {
 
-    var nextTurn = 1
+enum class SIGN {
+    X, O, E
+}
 
-    // TODO optimize memory
-    var array = Array(3) {
-        IntArray(3)
+class OXPosition() {
+
+    constructor(array: Array<SIGN>, nextTurn: SIGN) : this() {
+        this.array = array
+        this.nextTurn = nextTurn
     }
 
-    fun isWin(turn: Int): Boolean {
-        return 0.rowEqualTo(turn) ||
-                1.rowEqualTo(turn) ||
-                2.rowEqualTo(turn) ||
-                0.columnEqualTo(turn) ||
-                1.columnEqualTo(turn) ||
-                2.columnEqualTo(turn) ||
-                firstDiagonalEqual(turn) ||
-                secondDiagonalEqual(turn)
+
+    private var nextTurn: SIGN = X
+    private var array = Array(9) { E }
+
+    fun nextMove(row: Int, column: Int) {
+        val index = row * 3 + column
+        array[index] = nextTurn
+        nextTurn = nextTurn.opposite()
+    }
+
+    fun markIndex(index: Int) {
+        array[index] = nextTurn
+        nextTurn = nextTurn.opposite()
+    }
+
+    fun isWin(sign: SIGN): Boolean {
+        return (array[0] == sign && array[1] == sign && array[2] == sign) ||   // rows
+                (array[3] == sign && array[4] == sign && array[5] == sign) ||
+                (array[6] == sign && array[7] == sign && array[8] == sign) ||
+                (array[0] == sign && array[3] == sign && array[6] == sign) ||  // columns
+                (array[1] == sign && array[4] == sign && array[7] == sign) ||
+                (array[2] == sign && array[5] == sign && array[8] == sign) ||
+                (array[0] == sign && array[4] == sign && array[8] == sign) ||  // diagonals
+                (array[2] == sign && array[4] == sign && array[6] == sign)
     }
 
     fun isDraw(): Boolean {
-        return allFieldsMarked() && !isWin(-1) && !isWin(1)
+        return areAllFieldsMarked() && !isWin(X) && !isWin(O)
     }
 
-    fun markCell(row: Int, column: Int, value: Int) {
-        array[row][column] = value
-        nextTurn *= -1
-    }
-
-    private fun allFieldsMarked(): Boolean {
-        var allFieldsMarked = true
-        (0..2).forEach { x ->
-            (0..2).forEach { y ->
-                if (array[x][y] == 0) {
-                    allFieldsMarked = false
-                }
-            }
-        }
-        return allFieldsMarked
-    }
-
-    private fun Int.rowEqualTo(value: Int): Boolean {
-        return array[this][0] == value && array[this][1] == value && array[this][2] == value
-    }
-
-    private fun Int.columnEqualTo(value: Int): Boolean {
-        return array[0][this] == value && array[1][this] == value && array[2][this] == value
-    }
-
-    private fun firstDiagonalEqual(value: Int): Boolean {
-        return array[0][0] == value && array[1][1] == value && array[2][2] == value
-    }
-
-    private fun secondDiagonalEqual(value: Int): Boolean {
-        return array[0][2] == value && array[1][1] == value && array[2][0] == value
-    }
-
-    fun getAllChildren(): List<OXPosition>? {
-        if (allFieldsMarked()) return null
+    fun getAllChildren(): List<OXPosition> {
+        if (areAllFieldsMarked()) return emptyList()
 
         val positions = mutableListOf<OXPosition>()
-        (0..2).forEach { x ->
-            (0..2).forEach { y ->
-                if (array[x][y] == 0) {
-                    val newArray = array.copy3x3()
-                    val nt = nextTurn
-                    val newPosition = OXPosition().apply {
-                        this.nextTurn = nt
-                        this.array = newArray
-                    }
-                    newPosition.markCell(x, y, nt)
-                    positions.add(newPosition)
-                }
+        (0 until 9).forEach { index ->
+            if (array[index] == E) {
+                val newPosition = OXPosition(array.copyOf(), nextTurn)
+                newPosition.markIndex(index)
+                positions.add(newPosition)
             }
         }
         return positions
     }
-}
 
-fun Array<IntArray>.copy3x3(): Array<IntArray> {
-    return arrayOf(
-        get(0).copyOf(),
-        get(1).copyOf(),
-        get(2).copyOf()
-    )
+    fun print() {
+        (0..2).forEach { row ->
+            (0..2).forEach { column ->
+                val index = row * 3 + column
+                print("${array[index]} ")
+            }
+            println()
+        }
+    }
+
+    fun isSame(other: OXPosition): Boolean {
+        return array.contentEquals(other.array) && nextTurn == other.nextTurn
+    }
+
+    fun areAllFieldsMarked(): Boolean {
+        return array.find { it == E } == null
+    }
+
+    fun SIGN.opposite(): SIGN {
+        return when (this) {
+            X -> O
+            O -> X
+            E -> {
+                throw IllegalStateException()
+            }
+        }
+    }
 }
 

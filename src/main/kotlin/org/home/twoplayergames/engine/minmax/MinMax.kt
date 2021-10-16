@@ -4,32 +4,30 @@ import kotlin.math.max
 import kotlin.math.min
 
 class MinMax<T>(
-    val startNode: Node<T>,
-    val positionEvaluator: PositionEvaluator<T>
+    private val positionEvaluator: PositionEvaluator<T>
 ) {
 
-    fun start() {
-        minmax(startNode, 9, true)
-    }
-
-    private fun minmax(node: Node<T>, depth: Int, maximizing: Boolean): Float {
-        if (depth == 0) {
-            return positionEvaluator.evaluate(node.position)
+    fun minmax(node: Node<T>, maximizing: Boolean): Int {
+        if (node.children.isEmpty() || positionEvaluator.isGameEnd(node.position!!)) {
+            val eval = positionEvaluator.evaluate(node.position!!)
+            node.evaluation = eval
+            return eval
         }
 
+        node.type = if (maximizing) NodeType.MAX else NodeType.MIN
+
         return if (maximizing) {
-            var maxEval = Float.MIN_VALUE
-            // TODO create child nodes when call getChildren
+            var maxEval = Int.MIN_VALUE
             node.children.forEach {
-                val eval = minmax(it, depth -1, false)
+                val eval = minmax(it, false)
                 maxEval = max(maxEval, eval)
             }
             node.evaluation = maxEval
             maxEval
         } else {
-            var minEval = Float.MAX_VALUE
+            var minEval = Int.MAX_VALUE
             node.children.forEach {
-                val eval = minmax(it, depth -1, true)
+                val eval = minmax(it, true)
                 minEval = min(minEval, eval)
             }
             node.evaluation = minEval
