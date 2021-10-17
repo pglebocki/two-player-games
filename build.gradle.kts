@@ -1,7 +1,6 @@
 import org.jetbrains.compose.compose
 
 plugins {
-
     kotlin("jvm") version "1.5.31"
     id("org.jetbrains.kotlin.kapt") version "1.5.31"
     id("org.jetbrains.compose") version "1.0.0-alpha4-build362"
@@ -16,10 +15,10 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
-
-    implementation("com.google.dagger:dagger:2.30.1")
     implementation("junit:junit:4.12")
-    kapt("com.google.dagger:dagger-compiler:2.30.1")
+
+    implementation("com.google.dagger:dagger:2.35.1")
+    kapt("com.google.dagger:dagger-compiler:2.35.1")
 
     implementation(compose.desktop.currentOs)
 

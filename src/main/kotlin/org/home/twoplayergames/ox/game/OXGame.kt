@@ -1,11 +1,11 @@
-package org.home.twoplayergames.ox
+package org.home.twoplayergames.ox.game
 
 import org.home.twoplayergames.engine.minmax.MinMax
 import org.home.twoplayergames.engine.minmax.Node
 import org.home.twoplayergames.engine.minmax.VariantTreeBuilder
-import org.home.twoplayergames.ox.OXGameState.DRAW
-import org.home.twoplayergames.ox.OXGameState.O_WON
-import org.home.twoplayergames.ox.OXGameState.X_WON
+import org.home.twoplayergames.ox.game.OXGameState.DRAW
+import org.home.twoplayergames.ox.game.OXGameState.O_WON
+import org.home.twoplayergames.ox.game.OXGameState.X_WON
 
 enum class OXGameState {
     O_WON,

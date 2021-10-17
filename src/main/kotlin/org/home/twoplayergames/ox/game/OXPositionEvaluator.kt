@@ -1,4 +1,4 @@
-package org.home.twoplayergames.ox
+package org.home.twoplayergames.ox.game
 
 import org.home.twoplayergames.engine.minmax.PositionEvaluator
 

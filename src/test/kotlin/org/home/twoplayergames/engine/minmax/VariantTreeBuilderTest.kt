@@ -1,6 +1,6 @@
 package org.home.twoplayergames.engine.minmax
 
-import org.home.twoplayergames.ox.OXPosition
+import org.home.twoplayergames.ox.game.OXPosition
 import org.junit.jupiter.api.Test
 
 class VariantTreeBuilderTest {

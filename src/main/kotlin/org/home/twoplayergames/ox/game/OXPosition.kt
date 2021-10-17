@@ -1,12 +1,14 @@
-package org.home.twoplayergames.ox
+package org.home.twoplayergames.ox.game
 
-import org.home.twoplayergames.ox.Sign.E
-import org.home.twoplayergames.ox.Sign.O
-import org.home.twoplayergames.ox.Sign.X
+import org.home.twoplayergames.ox.game.Sign.E
+import org.home.twoplayergames.ox.game.Sign.O
+import org.home.twoplayergames.ox.game.Sign.X
 
 
 enum class Sign {
-    X, O, E
+    X,
+    O,
+    E // empty
 }
 
 class OXPosition() {

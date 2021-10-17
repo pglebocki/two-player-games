@@ -2,9 +2,12 @@ package org.home.twoplayergames.ox
 
 import org.home.twoplayergames.engine.minmax.MinMax
 import org.home.twoplayergames.engine.minmax.VariantTreeBuilder
-import org.home.twoplayergames.ox.Sign.E
-import org.home.twoplayergames.ox.Sign.O
-import org.home.twoplayergames.ox.Sign.X
+import org.home.twoplayergames.ox.game.OXPosition
+import org.home.twoplayergames.ox.game.Sign.E
+import org.home.twoplayergames.ox.game.Sign.O
+import org.home.twoplayergames.ox.game.Sign.X
+import org.home.twoplayergames.ox.game.OXPositionEvaluator
+import org.home.twoplayergames.ox.game.Sign
 import org.junit.jupiter.api.Test
 
 class OXMinMaxTest {
