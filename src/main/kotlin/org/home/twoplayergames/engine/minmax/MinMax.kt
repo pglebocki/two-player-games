@@ -7,7 +7,7 @@ class MinMax<T>(
     private val positionEvaluator: PositionEvaluator<T>
 ) {
 
-    fun minmax(node: Node<T>, maximizing: Boolean): Int {
+    fun execute(node: Node<T>, maximizing: Boolean): Int {
         if (node.children.isEmpty() || positionEvaluator.isGameEnd(node.position!!)) {
             val eval = positionEvaluator.evaluate(node.position!!)
             node.evaluation = eval
@@ -19,7 +19,7 @@ class MinMax<T>(
         return if (maximizing) {
             var maxEval = Int.MIN_VALUE
             node.children.forEach {
-                val eval = minmax(it, false)
+                val eval = execute(it, false)
                 maxEval = max(maxEval, eval)
             }
             node.evaluation = maxEval
@@ -27,7 +27,7 @@ class MinMax<T>(
         } else {
             var minEval = Int.MAX_VALUE
             node.children.forEach {
-                val eval = minmax(it, true)
+                val eval = execute(it, true)
                 minEval = min(minEval, eval)
             }
             node.evaluation = minEval

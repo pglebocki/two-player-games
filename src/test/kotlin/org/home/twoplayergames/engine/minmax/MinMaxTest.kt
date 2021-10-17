@@ -26,8 +26,8 @@ class MinMaxTest {
                 Node(-1), Node(2)
             )
         )
-        Assertions.assertEquals(tested.minmax(rootNode, true), 2)
-        Assertions.assertEquals(tested.minmax(rootNode, false), -1)
+        Assertions.assertEquals(tested.execute(rootNode, true), 2)
+        Assertions.assertEquals(tested.execute(rootNode, false), -1)
     }
 
     @Test
@@ -46,8 +46,8 @@ class MinMaxTest {
                 )
             )
         )
-        Assertions.assertEquals(tested.minmax(rootNode, true), 3)
-        Assertions.assertEquals(tested.minmax(rootNode, false), 3)
+        Assertions.assertEquals(tested.execute(rootNode, true), 3)
+        Assertions.assertEquals(tested.execute(rootNode, false), 3)
     }
 
     @Test
@@ -84,8 +84,8 @@ class MinMaxTest {
                 )
             )
         )
-        Assertions.assertEquals(tested.minmax(rootNode, true), 3)
-        Assertions.assertEquals(tested.minmax(rootNode, false), 0)
+        Assertions.assertEquals(tested.execute(rootNode, true), 3)
+        Assertions.assertEquals(tested.execute(rootNode, false), 0)
     }
 
 }

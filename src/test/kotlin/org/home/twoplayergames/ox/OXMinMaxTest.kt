@@ -22,7 +22,7 @@ class OXMinMaxTest {
             E, E, X
         )
         val node = VariantTreeBuilder().build(pos)
-        val tree = tested.minmax(node, false)
+        val tree = tested.execute(node, false)
         tree
     }
 

@@ -1,6 +1,8 @@
 package org.home.twoplayergames.engine.minmax
 
-class VariantTreeBuilder<T>(
+import javax.inject.Inject
+
+class VariantTreeBuilder<T> @Inject constructor(
     private val evaluator: PositionEvaluator<T>
 ) {
 

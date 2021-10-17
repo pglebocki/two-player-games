@@ -25,25 +25,28 @@ import org.home.twoplayergames.ox.game.OXPosition
 import org.home.twoplayergames.ox.game.Sign
 import javax.inject.Inject
 
-class OXWindow @Inject constructor() {
+class OXWindow @Inject constructor(
+    private val game: OXGame
+) {
+
+    private lateinit var displayedPosition: MutableState<OXPosition>
+
+    private val gameCallback: (OXGameState) -> Unit = {
+        println("Game status: $it")
+    }
+
+    private val updatePositionCallback: (OXPosition) -> Unit = {
+        displayedPosition.value = it
+    }
+
+    init {
+        game.gameStatusCallback = gameCallback
+        game.updatePositionCallback = updatePositionCallback
+    }
 
     fun start() {
         application {
-
-            val position = remember { mutableStateOf(OXPosition()) }
-
-            val gameCallback: (OXGameState) -> Unit = {
-                println("Game status: $it")
-            }
-
-            val updatePositionCallback: (OXPosition) -> Unit = {
-                position.value = it
-            }
-
-            val game = OXGame(
-                gameCallback,
-                updatePositionCallback
-            )
+            displayedPosition = remember { mutableStateOf(OXPosition()) }
 
             Window(
                 onCloseRequest = ::exitApplication,
@@ -54,21 +57,21 @@ class OXWindow @Inject constructor() {
                     Row {
                         Spacer(Modifier.size(30.dp))
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            button(game, position, 0, 0)
-                            button(game, position, 1, 0)
-                            button(game, position, 2, 0)
+                            button(game, displayedPosition, 0, 0)
+                            button(game, displayedPosition, 1, 0)
+                            button(game, displayedPosition, 2, 0)
                         }
                         Spacer(Modifier.size(30.dp))
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            button(game, position, 0, 1)
-                            button(game, position, 1, 1)
-                            button(game, position, 2, 1)
+                            button(game, displayedPosition, 0, 1)
+                            button(game, displayedPosition, 1, 1)
+                            button(game, displayedPosition, 2, 1)
                         }
                         Spacer(Modifier.size(30.dp))
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            button(game, position, 0, 2)
-                            button(game, position, 1, 2)
-                            button(game, position, 2, 2)
+                            button(game, displayedPosition, 0, 2)
+                            button(game, displayedPosition, 1, 2)
+                            button(game, displayedPosition, 2, 2)
                         }
                     }
                 }
@@ -78,7 +81,8 @@ class OXWindow @Inject constructor() {
 
     @Composable
     private fun button(game: OXGame, position: MutableState<OXPosition>, row: Int, column: Int) {
-        val enabled = remember { mutableStateOf(true) }
+        val sign = position.value.getCell(row, column)
+        val char = if (sign != Sign.E) sign.toString() else ""
 
         Spacer(Modifier.size(30.dp))
         Button(
@@ -86,11 +90,8 @@ class OXWindow @Inject constructor() {
                 game.playerMove(row, column)
             },
             modifier = Modifier.width(50.dp).height(50.dp),
-            enabled = enabled.value
+            enabled = sign == Sign.E
         ) {
-            val sign = position.value.getCell(row, column)
-            val char = if (sign != Sign.E) sign.toString() else ""
-            enabled.value = sign != Sign.E
             Text(char)
         }
     }
